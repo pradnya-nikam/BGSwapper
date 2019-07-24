@@ -16,7 +16,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   var window: UIWindow?
   
 //  let model = DeepLabV3()
-
+  let viewModel = ViewModel()
+  let image = #imageLiteral(resourceName: "humanAndDog")
   func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
     // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
     // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
@@ -25,7 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     // Use a UIHostingController as window root view controller
     if let windowScene = scene as? UIWindowScene {
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = UIHostingController(rootView: ContentView())
+      window.rootViewController = UIHostingController(rootView: ContentView(data: viewModel))
         self.window = window
         window.makeKeyAndVisible()
     }
@@ -55,7 +56,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
       }()
   
   func processImage() {
-    guard let ciImage = CIImage(image: #imageLiteral(resourceName: "humanAndDog")) else { fatalError("Unable to create \(CIImage.self) from image.") }
+    viewModel.mainImage = image
+    guard let ciImage = CIImage(image: image) else { fatalError("Unable to create \(CIImage.self) from image.") }
     let handler = VNImageRequestHandler(ciImage: ciImage, orientation: CGImagePropertyOrientation.up)
                 do {
                     try handler.perform([self.classificationRequest])
@@ -82,12 +84,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
           } else {
             if let firstValueObservation = output.first as? VNCoreMLFeatureValueObservation, let multiArray = firstValueObservation.featureValue.multiArrayValue {
                 print( "Result:\n \(firstValueObservation.featureValue)")
-                let image = multiArray.cgImage()
-                print(image.debugDescription)
+                if let image = multiArray.cgImage() {
+                  viewModel.overlayImage = UIImage(cgImage: image)
+                  print(image)
+                }
               }
               
           }
       }
+  
   
   func sceneDidDisconnect(_ scene: UIScene) {
     // Called as the scene is being released by the system.
