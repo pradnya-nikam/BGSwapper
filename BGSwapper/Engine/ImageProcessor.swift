@@ -11,6 +11,8 @@ import Vision
 import CoreML
 import UIKit
 
+let imageWidth = 513
+let imageHeight = 513
 
 class ImageProcessor {
   //  let labelNames = [
@@ -23,7 +25,7 @@ class ImageProcessor {
   public var delegate: ImageProcessorDelegate?
   
   /// - Tag: MLModelSetup
-  lazy var classificationRequest: VNCoreMLRequest = {
+  private lazy var classificationRequest: VNCoreMLRequest = {
     do {
       /*
        Use the Swift class `MobileNet` Core ML generates from the model.
@@ -70,14 +72,62 @@ class ImageProcessor {
     } else {
       if let firstValueObservation = output.first as? VNCoreMLFeatureValueObservation, let multiArray = firstValueObservation.featureValue.multiArrayValue {
         print( "Result:\n \(firstValueObservation.featureValue)")
-        if let image = multiArray.cgImage() {
-          //UPdate UI via delegate
+        //Update UI via delegate
+        if let image = self.createImage(multiArray: multiArray) {
           self.delegate?.imageProcessingCompletion(processedImage: UIImage(cgImage: image))
-          print(image)
         }
       }
       
     }
   }
-  
+
+  private func getEdgesOf(elementValue: Int, x: Int, y: Int, maxX: Int, maxY: Int)-> [[Int]] {
+    var arrayOfEdges = [[Int]]()
+    (x > 0 && y > 0 )       ? arrayOfEdges.append([x-1, y-1]) : ()
+    (y > 0)                 ? arrayOfEdges.append([x  , y-1]) : ()
+    (x < maxX && y > 0)     ? arrayOfEdges.append([x+1, y-1]) : ()
+    (x < maxX)              ? arrayOfEdges.append([x+1, y])   : ()
+    (x < maxX && y < maxY)  ? arrayOfEdges.append([x+1, y+1]) : ()
+    (y < maxY)              ? arrayOfEdges.append([x  , y+1]) : ()
+    (x > 0 && y < maxY)     ? arrayOfEdges.append([x-1, y+1]) : ()
+    (x < maxX)              ? arrayOfEdges.append([x-1, y])   : ()
+    return arrayOfEdges
+  }
+
+  private func createImage(multiArray: MLMultiArray)-> CGImage? {
+    let newMultiArray: MLMultiArray
+    do {
+      newMultiArray = try MLMultiArray(shape: multiArray.shape, dataType: multiArray.dataType)
+    } catch {
+      print("Error while creating new multi array")
+      return nil
+    }
+
+    for x in 0...imageWidth {
+      for y in 0...imageHeight {
+        let elementIndex =  [x,y].map({NSNumber(value: $0)})
+        let elementValue = multiArray[elementIndex]
+        if(elementValue.intValue > 0) {
+          let edgeIndices = getEdgesOf(elementValue: elementValue.intValue, x: x,y: y, maxX: imageWidth, maxY: imageHeight)
+          var edgeDetected = false
+          for edgeIndex in edgeIndices {
+            let edgeIndexIndexInNSNumber = edgeIndex.map({NSNumber(value: $0)})
+            //check if an edge element is not equal to current element -
+            if multiArray[edgeIndexIndexInNSNumber].intValue != elementValue.intValue {
+              edgeDetected = true
+              break;
+            }
+          }
+           edgeDetected ? (newMultiArray[elementIndex] = elementValue) : (newMultiArray[elementIndex] = 0)
+        } else {
+          newMultiArray[elementIndex] = 0
+        }
+      }
+    }
+    print(newMultiArray)
+    if let image = newMultiArray.cgImage() {
+      return image
+    }
+    return nil
+  }
 }

@@ -30,13 +30,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, ImageProcessorDelegate 
         self.window = window
         window.makeKeyAndVisible()
     }
+    viewModel.mainImage = image
     processImage()
   }
 
   
   
   func processImage() {
-    viewModel.mainImage = image
     imageProcessor.delegate = self
     //call the image processor
     imageProcessor.processImage(image: image)
