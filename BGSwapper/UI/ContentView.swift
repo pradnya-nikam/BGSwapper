@@ -20,8 +20,10 @@ struct ContentView: View {
         //Main Image
         if(self.data.mainImage != nil) {
           Image(uiImage: self.data.mainImage!)
-          .resizable()
-          .aspectRatio(contentMode: .fit)
+            .resizable()
+            .scaledToFit()
+            .frame(width: 513, height: 513)
+            
         } else {
           Text("No main Image set")
         }
@@ -30,7 +32,7 @@ struct ContentView: View {
         if(self.data.overlayImage != nil) {
           Image(uiImage: self.data.overlayImage!)
             .resizable()
-            .aspectRatio(contentMode: .fit)
+            .scaledToFit()
             .opacity(0.8)
         } else {
             Text("Processing...")

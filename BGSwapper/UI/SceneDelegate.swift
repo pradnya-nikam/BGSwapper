@@ -13,9 +13,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, ImageProcessorDelegate 
 
   var window: UIWindow?
   
-//  let model = DeepLabV3()
   let viewModel = ViewModel()
-  let image = #imageLiteral(resourceName: "humanAndDog")
+  let image = #imageLiteral(resourceName: "pradImage")
   let imageProcessor = ImageProcessor()
 
   func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
