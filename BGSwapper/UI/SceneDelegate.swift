@@ -38,7 +38,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, ImageProcessorDelegate 
   func processImage() {
     imageProcessor.delegate = self
     //call the image processor
-    imageProcessor.processImage(image: image)
+    imageProcessor.performProcessing(onImage: image)
   }
   
   

@@ -24,6 +24,7 @@
 		4C6F160022EEB151001F221A /* ImageProcessorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6F15FF22EEB151001F221A /* ImageProcessorDelegate.swift */; };
 		4CF7268A22F7E35200508CA7 /* ImageMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF7268922F7E35200508CA7 /* ImageMetadata.swift */; };
 		4CF7268C22F9285200508CA7 /* RGBAImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF7268B22F9285200508CA7 /* RGBAImage.swift */; };
+		4CF7268E22FA73B900508CA7 /* ImageResizingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF7268D22FA73B800508CA7 /* ImageResizingExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		4C6F15FF22EEB151001F221A /* ImageProcessorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessorDelegate.swift; sourceTree = "<group>"; };
 		4CF7268922F7E35200508CA7 /* ImageMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMetadata.swift; sourceTree = "<group>"; };
 		4CF7268B22F9285200508CA7 /* RGBAImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGBAImage.swift; sourceTree = "<group>"; };
+		4CF7268D22FA73B800508CA7 /* ImageResizingExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResizingExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +165,7 @@
 				4C6F15FF22EEB151001F221A /* ImageProcessorDelegate.swift */,
 				4CF7268922F7E35200508CA7 /* ImageMetadata.swift */,
 				4CF7268B22F9285200508CA7 /* RGBAImage.swift */,
+				4CF7268D22FA73B800508CA7 /* ImageResizingExtension.swift */,
 			);
 			path = Engine;
 			sourceTree = "<group>";
@@ -290,6 +293,7 @@
 				4C389BDA22E570F90008E720 /* SceneDelegate.swift in Sources */,
 				4C389BDC22E570F90008E720 /* ContentView.swift in Sources */,
 				4C6F15FB22E7059C001F221A /* ViewModel.swift in Sources */,
+				4CF7268E22FA73B900508CA7 /* ImageResizingExtension.swift in Sources */,
 				4C389BFB22E571750008E720 /* DeepLabV3.mlmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

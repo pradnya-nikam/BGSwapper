@@ -33,7 +33,7 @@ public struct RGBAImage {
     var pixels: UnsafeMutableBufferPointer<Pixel>
     var width: Int
     var height: Int
-    
+
     init?(image: UIImage) {
         guard let cgImage = image.cgImage else { return nil }
         width = Int(image.size.width)
@@ -49,6 +49,7 @@ public struct RGBAImage {
         imageContext.draw(cgImage, in: CGRect(origin: CGPoint(x: 0,y :0), size: image.size))
         pixels = UnsafeMutableBufferPointer<Pixel>(start: imageData, count: width * height)
     }
+
     public func toUIImage() -> UIImage? {
           let bitsPerComponent = 8
           let bytesPerPixel = 4
