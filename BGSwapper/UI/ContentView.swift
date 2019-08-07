@@ -33,7 +33,7 @@ struct ContentView: View {
           Image(uiImage: self.data.overlayImage!)
             .resizable()
             .scaledToFit()
-            .opacity(0.8)
+            .opacity(0.5)
         } else {
             Text("Processing...")
         }

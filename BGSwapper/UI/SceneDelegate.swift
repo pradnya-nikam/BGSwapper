@@ -14,7 +14,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, ImageProcessorDelegate 
   var window: UIWindow?
   
   let viewModel = ViewModel()
-  let image = #imageLiteral(resourceName: "pradImage")
+  let image = #imageLiteral(resourceName: "pradnya1")
   let imageProcessor = ImageProcessor()
 
   func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {

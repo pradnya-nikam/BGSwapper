@@ -10,6 +10,7 @@ import Foundation
 import Vision
 import CoreML
 import UIKit
+import func AVFoundation.AVMakeRect
 
 let imageWidth = 513
 let imageHeight = 513
@@ -23,15 +24,10 @@ class ImageProcessor {
   // MARK: - Image Classification
   
   public var delegate: ImageProcessorDelegate?
-  
+  var imageMetadata: ImageMetaData?
   /// - Tag: MLModelSetup
   private lazy var classificationRequest: VNCoreMLRequest = {
     do {
-      /*
-       Use the Swift class `MobileNet` Core ML generates from the model.
-       To use a different Core ML classifier model, add it to the project
-       and replace `MobileNet` with that model's generated Swift class.
-       */
       let model = try VNCoreMLModel(for: DeepLabV3().model)
       
       let request = VNCoreMLRequest(model: model, completionHandler: { [weak self] request, error in
@@ -45,6 +41,7 @@ class ImageProcessor {
   }()
   
   func processImage(image: UIImage) {
+    self.imageMetadata = ImageMetaData(originalImage: image)
     guard let ciImage = CIImage(image: image) else { fatalError("Unable to create \(CIImage.self) from image.") }
     let handler = VNImageRequestHandler(ciImage: ciImage, orientation: CGImagePropertyOrientation.up)
     do {
@@ -73,11 +70,15 @@ class ImageProcessor {
       if let firstValueObservation = output.first as? VNCoreMLFeatureValueObservation, let multiArray = firstValueObservation.featureValue.multiArrayValue {
         print( "Result:\n \(firstValueObservation.featureValue)")
         //Update UI via delegate
-        if let image = self.createImage(multiArray: multiArray) {
-          self.delegate?.imageProcessingCompletion(processedImage: UIImage(cgImage: image))
-        }
+        imageProcessingCompleted(multiArray: multiArray)
       }
-      
+    }
+  }
+
+  private func imageProcessingCompleted(multiArray: MLMultiArray) {
+    if let image = self.createImageWithEdges(multiArray: multiArray) {
+      self.delegate?.imageProcessingCompletion(processedImage: UIImage(cgImage: image))
+      let _ = clearImageBackgroundPixels()
     }
   }
 
@@ -94,17 +95,18 @@ class ImageProcessor {
     return arrayOfEdges
   }
 
-  private func createImage(multiArray: MLMultiArray)-> CGImage? {
-    let newMultiArray: MLMultiArray
+  private func createImageWithEdges(multiArray: MLMultiArray)-> CGImage? {
+    let multiArrayWithEdges: MLMultiArray
     do {
-      newMultiArray = try MLMultiArray(shape: multiArray.shape, dataType: multiArray.dataType)
+      multiArrayWithEdges = try MLMultiArray(shape: multiArray.shape, dataType: multiArray.dataType)
     } catch {
       print("Error while creating new multi array")
       return nil
     }
-
-    for x in 0...imageWidth {
-      for y in 0...imageHeight {
+    var backgroundPixels = [(Int, Int)]()
+    
+    for x in 0..<imageWidth {
+      for y in 0..<imageHeight {
         let elementIndex =  [x,y].map({NSNumber(value: $0)})
         let elementValue = multiArray[elementIndex]
         if(elementValue.intValue > 0) {
@@ -118,16 +120,47 @@ class ImageProcessor {
               break;
             }
           }
-           edgeDetected ? (newMultiArray[elementIndex] = elementValue) : (newMultiArray[elementIndex] = 0)
+           edgeDetected ? (multiArrayWithEdges[elementIndex] = elementValue) : (multiArrayWithEdges[elementIndex] = 0)
         } else {
-          newMultiArray[elementIndex] = 0
+          backgroundPixels.append((x,y))
+          multiArrayWithEdges[elementIndex] = 0
         }
       }
     }
-    print(newMultiArray)
-    if let image = newMultiArray.cgImage() {
-      return image
+    imageMetadata?.backgroundPixels = backgroundPixels
+    print(multiArrayWithEdges)
+    self.imageMetadata?.processedImageMultiArrayWithEdges = multiArrayWithEdges
+    if let processedImageWithEdges = multiArrayWithEdges.cgImage() {
+      self.imageMetadata?.processedImageWithEdges = processedImageWithEdges
+      return processedImageWithEdges
     }
     return nil
   }
+  
+  func clearImageBackgroundPixels() -> UIImage?{
+    guard let originalImage = self.imageMetadata?.originalImage, let backgroundPixels = self.imageMetadata?.backgroundPixels else {
+      return nil
+    }
+    let image = resized(image: originalImage, width: imageWidth, height: imageHeight)
+    let rgba = RGBAImage(image: image)!
+    backgroundPixels.forEach { (y,x) in
+      let index = y * rgba.width + x
+      var pixel = rgba.pixels[index]
+      pixel.alpha = 1
+      rgba.pixels[index] = pixel
+    }
+    let newImage = rgba.toUIImage()
+    return newImage
+  }
+  
+  func resized(image: UIImage, width: Int, height: Int)-> UIImage {
+    let size = CGSize(width: width, height: height)
+    let rect = AVMakeRect(aspectRatio: image.size, insideRect: CGRect(origin: .zero, size: size))
+    let renderer = UIGraphicsImageRenderer(size: size)
+      return renderer.image { (context) in
+            image.draw(in: rect)
+        }
+  }
+  
 }
+

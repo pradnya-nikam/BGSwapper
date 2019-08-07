@@ -22,6 +22,8 @@
 		4C6F15FB22E7059C001F221A /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6F15FA22E7059C001F221A /* ViewModel.swift */; };
 		4C6F15FE22EEAEF3001F221A /* ImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6F15FD22EEAEF2001F221A /* ImageProcessor.swift */; };
 		4C6F160022EEB151001F221A /* ImageProcessorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6F15FF22EEB151001F221A /* ImageProcessorDelegate.swift */; };
+		4CF7268A22F7E35200508CA7 /* ImageMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF7268922F7E35200508CA7 /* ImageMetadata.swift */; };
+		4CF7268C22F9285200508CA7 /* RGBAImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF7268B22F9285200508CA7 /* RGBAImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +56,8 @@
 		4C6F15FA22E7059C001F221A /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		4C6F15FD22EEAEF2001F221A /* ImageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessor.swift; sourceTree = "<group>"; };
 		4C6F15FF22EEB151001F221A /* ImageProcessorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessorDelegate.swift; sourceTree = "<group>"; };
+		4CF7268922F7E35200508CA7 /* ImageMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMetadata.swift; sourceTree = "<group>"; };
+		4CF7268B22F9285200508CA7 /* RGBAImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGBAImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +161,8 @@
 			children = (
 				4C6F15FD22EEAEF2001F221A /* ImageProcessor.swift */,
 				4C6F15FF22EEB151001F221A /* ImageProcessorDelegate.swift */,
+				4CF7268922F7E35200508CA7 /* ImageMetadata.swift */,
+				4CF7268B22F9285200508CA7 /* RGBAImage.swift */,
 			);
 			path = Engine;
 			sourceTree = "<group>";
@@ -274,8 +280,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C6F15F322E6F818001F221A /* MLMultiArray+Image.swift in Sources */,
+				4CF7268C22F9285200508CA7 /* RGBAImage.swift in Sources */,
 				4C6F15FE22EEAEF3001F221A /* ImageProcessor.swift in Sources */,
 				4C389BD822E570F90008E720 /* AppDelegate.swift in Sources */,
+				4CF7268A22F7E35200508CA7 /* ImageMetadata.swift in Sources */,
 				4C6F160022EEB151001F221A /* ImageProcessorDelegate.swift in Sources */,
 				4C6F15F522E6FA83001F221A /* CGImage+RawBytes.swift in Sources */,
 				4C6F15F722E6FB4F001F221A /* Math.swift in Sources */,
