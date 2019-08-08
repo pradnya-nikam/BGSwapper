@@ -10,5 +10,5 @@ import Foundation
 import UIKit
 
 protocol ImageProcessorDelegate {
-  func imageProcessingCompletion(processedImage: UIImage)
+  func imageProcessingCompletion(processedImageWithEdges: UIImage, processedImageWithClearBackground: UIImage)
 }

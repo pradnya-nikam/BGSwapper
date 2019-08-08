@@ -76,11 +76,11 @@ class ImageProcessor {
   }
 
   private func imageMLProcessingCompleted(multiArray: MLMultiArray) {
-    if let processedImageWithEdges = self.createImageWithEdges(multiArray: multiArray) {
+    if let processedImageWithEdges = self.createImageWithEdges(multiArray: multiArray), let processedImageWithClearBackground = clearImageBackgroundPixels() {
       //Update UI via delegate
-      self.delegate?.imageProcessingCompletion(processedImage: processedImageWithEdges)
       self.imageMetadata?.processedImageWithEdges = processedImageWithEdges
-      self.imageMetadata?.processedImageWithClearBackground = clearImageBackgroundPixels()
+      self.imageMetadata?.processedImageWithClearBackground = processedImageWithClearBackground
+      self.delegate?.imageProcessingCompletion(processedImageWithEdges: processedImageWithEdges, processedImageWithClearBackground: processedImageWithClearBackground)
     }
   }
 
@@ -143,7 +143,7 @@ class ImageProcessor {
     }
 
   // MARK: - Step 3: Edit original image to remove background using the list of background pixels created in the last step
-  func clearImageBackgroundPixels() -> UIImage?{
+  func clearImageBackgroundPixels() -> UIImage? {
     guard let originalImage = self.imageMetadata?.originalImage, let backgroundPixels = self.imageMetadata?.backgroundPixels else {
       return nil
     }

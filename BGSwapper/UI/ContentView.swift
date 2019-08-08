@@ -16,7 +16,10 @@ struct ContentView: View {
     }
   
     var body: some View {
-      ZStack{
+      ScrollView{
+        Text("Original Image")
+                  .bold()
+      ZStack {
         //Main Image
         if(self.data.mainImage != nil) {
           Image(uiImage: self.data.mainImage!)
@@ -33,12 +36,23 @@ struct ContentView: View {
           Image(uiImage: self.data.overlayImage!)
             .resizable()
             .scaledToFit()
-            .opacity(0.5)
+            .opacity(0.7)
         } else {
             Text("Processing...")
         }
       }
+        //Processed image
+        if(self.data.processedImage != nil) {
+          Text("Processed Image")
+                .bold()
+          Image(uiImage: self.data.processedImage!)
+            .resizable()
+            .scaledToFit()
+            .frame(width: 513, height: 513)
+          }
+      }
     }
+  
 }
 
 #if DEBUG

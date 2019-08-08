@@ -24,4 +24,9 @@ final class ViewModel: BindableObject {
                 willChange.send()
             }
     }
+  var processedImage: UIImage? {
+    willSet {
+                    willChange.send()
+                }
+  }
 }

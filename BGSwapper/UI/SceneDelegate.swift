@@ -71,8 +71,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, ImageProcessorDelegate 
   }
 
   //MARK: Image processor Delegate
-  func imageProcessingCompletion(processedImage: UIImage) {
-    viewModel.overlayImage = processedImage
+  func imageProcessingCompletion(processedImageWithEdges: UIImage, processedImageWithClearBackground: UIImage) {
+    viewModel.overlayImage = processedImageWithEdges
+    viewModel.processedImage = processedImageWithClearBackground
   }
 
 }
