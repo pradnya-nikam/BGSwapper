@@ -15,18 +15,18 @@ final class ViewModel: BindableObject {
   let willChange = PassthroughSubject<Void, Never>()
   
   var overlayImage: UIImage? {
-          willSet {
-              willChange.send()
-          }
+    willSet {
+      willChange.send()
+    }
   }
   var mainImage: UIImage? {
-            willSet {
-                willChange.send()
-            }
+    willSet {
+      willChange.send()
     }
+  }
   var processedImage: UIImage? {
     willSet {
-                    willChange.send()
-                }
+      willChange.send()
+    }
   }
 }

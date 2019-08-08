@@ -10,15 +10,15 @@ import SwiftUI
 
 struct ContentView: View {
   @ObjectBinding var data: ViewModel
-    
-  private var overlayImage: UIImage {
-        self.data.overlayImage!
-    }
   
-    var body: some View {
-      ScrollView{
-        Text("Original Image")
-                  .bold()
+  private var overlayImage: UIImage {
+    self.data.overlayImage!
+  }
+  
+  var body: some View {
+    ScrollView{
+      Text("Original Image")
+        .bold()
       ZStack {
         //Main Image
         if(self.data.mainImage != nil) {
@@ -26,11 +26,11 @@ struct ContentView: View {
             .resizable()
             .scaledToFit()
             .frame(width: 513, height: 513)
-            
+          
         } else {
           Text("No main Image set")
         }
-
+        
         //Overlay Image
         if(self.data.overlayImage != nil) {
           Image(uiImage: self.data.overlayImage!)
@@ -38,27 +38,27 @@ struct ContentView: View {
             .scaledToFit()
             .opacity(0.7)
         } else {
-            Text("Processing...")
+          Text("Processing...")
         }
       }
-        //Processed image
-        if(self.data.processedImage != nil) {
-          Text("Processed Image")
-                .bold()
-          Image(uiImage: self.data.processedImage!)
-            .resizable()
-            .scaledToFit()
-            .frame(width: 513, height: 513)
-          }
+      //Processed image
+      if(self.data.processedImage != nil) {
+        Text("Processed Image")
+          .bold()
+        Image(uiImage: self.data.processedImage!)
+          .resizable()
+          .scaledToFit()
+          .frame(width: 513, height: 513)
       }
     }
+  }
   
 }
 
 #if DEBUG
 struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-      ContentView(data: ViewModel())
-    }
+  static var previews: some View {
+    ContentView(data: ViewModel())
+  }
 }
 #endif

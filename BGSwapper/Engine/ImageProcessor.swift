@@ -21,12 +21,12 @@ class ImageProcessor {
   //     "car", "cat", "chair", "cow", "diningtable", "dog", "horse", "motorbike",
   //     "person", "pottedplant", "sheep", "sofa", "train", "tv"
   //   ]
-
+  
   // MARK: - Step 1: Image Classification
   
   public var delegate: ImageProcessorDelegate?
   var imageMetadata: ImageMetaData?
-
+  
   /// - Tag: MLModelSetup
   private lazy var classificationRequest: VNCoreMLRequest = {
     do {
@@ -74,7 +74,7 @@ class ImageProcessor {
       }
     }
   }
-
+  
   private func imageMLProcessingCompleted(multiArray: MLMultiArray) {
     if let processedImageWithEdges = self.createImageWithEdges(multiArray: multiArray), let processedImageWithClearBackground = clearImageBackgroundPixels() {
       //Update UI via delegate
@@ -83,7 +83,7 @@ class ImageProcessor {
       self.delegate?.imageProcessingCompletion(processedImageWithEdges: processedImageWithEdges, processedImageWithClearBackground: processedImageWithClearBackground)
     }
   }
-
+  
   // MARK: - Step 2: Edge Detection using ML Model output.
   
   private func createImageWithEdges(multiArray: MLMultiArray)-> UIImage? {
@@ -98,7 +98,7 @@ class ImageProcessor {
     var backgroundPixels = [(Int, Int)]()
     for y in 0..<imageHeight {
       for x in 0..<imageWidth
-       {
+      {
         let elementIndex =  [x,y].map({NSNumber(value: $0)})
         let elementValue = multiArray[elementIndex]
         if(elementValue.intValue > 0) {
@@ -112,7 +112,7 @@ class ImageProcessor {
               break;
             }
           }
-           edgeDetected ? (multiArrayWithEdges[elementIndex] = elementValue) : (multiArrayWithEdges[elementIndex] = 0)
+          edgeDetected ? (multiArrayWithEdges[elementIndex] = elementValue) : (multiArrayWithEdges[elementIndex] = 0)
         } else {
           backgroundPixels.append((x,y))
           multiArrayWithEdges[elementIndex] = 0
@@ -126,22 +126,22 @@ class ImageProcessor {
     return nil
   }
   
-/**
+  /**
    Returns array of  'edges' of a given element in a 2D matrix
    */
   private func getEdgesOf(elementValue: Int, x: Int, y: Int, maxX: Int, maxY: Int)-> [[Int]] {
-      var arrayOfEdges = [[Int]]()
-      (x > 0 && y > 0 )       ? arrayOfEdges.append([x-1, y-1]) : ()
-      (y > 0)                 ? arrayOfEdges.append([x  , y-1]) : ()
-      (x < maxX && y > 0)     ? arrayOfEdges.append([x+1, y-1]) : ()
-      (x < maxX)              ? arrayOfEdges.append([x+1, y])   : ()
-      (x < maxX && y < maxY)  ? arrayOfEdges.append([x+1, y+1]) : ()
-      (y < maxY)              ? arrayOfEdges.append([x  , y+1]) : ()
-      (x > 0 && y < maxY)     ? arrayOfEdges.append([x-1, y+1]) : ()
-      (x < maxX)              ? arrayOfEdges.append([x-1, y])   : ()
-      return arrayOfEdges
-    }
-
+    var arrayOfEdges = [[Int]]()
+    (x > 0 && y > 0 )       ? arrayOfEdges.append([x-1, y-1]) : ()
+    (y > 0)                 ? arrayOfEdges.append([x  , y-1]) : ()
+    (x < maxX && y > 0)     ? arrayOfEdges.append([x+1, y-1]) : ()
+    (x < maxX)              ? arrayOfEdges.append([x+1, y])   : ()
+    (x < maxX && y < maxY)  ? arrayOfEdges.append([x+1, y+1]) : ()
+    (y < maxY)              ? arrayOfEdges.append([x  , y+1]) : ()
+    (x > 0 && y < maxY)     ? arrayOfEdges.append([x-1, y+1]) : ()
+    (x < maxX)              ? arrayOfEdges.append([x-1, y])   : ()
+    return arrayOfEdges
+  }
+  
   // MARK: - Step 3: Edit original image to remove background using the list of background pixels created in the last step
   func clearImageBackgroundPixels() -> UIImage? {
     guard let originalImage = self.imageMetadata?.originalImage, let backgroundPixels = self.imageMetadata?.backgroundPixels else {

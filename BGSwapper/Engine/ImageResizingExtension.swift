@@ -12,10 +12,10 @@ import func AVFoundation.AVMakeRect
 
 extension UIImage {
   func resized(toSize size: CGSize)-> UIImage {
-      let rect = AVMakeRect(aspectRatio: self.size, insideRect: CGRect(origin: .zero, size: size))
-      let renderer = UIGraphicsImageRenderer(size: size)
-        return renderer.image { (context) in
-              self.draw(in: rect)
-          }
+    let rect = AVMakeRect(aspectRatio: self.size, insideRect: CGRect(origin: .zero, size: size))
+    let renderer = UIGraphicsImageRenderer(size: size)
+    return renderer.image { (context) in
+      self.draw(in: rect)
     }
+  }
 }
