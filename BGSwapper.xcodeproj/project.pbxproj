@@ -15,7 +15,6 @@
 		4C389BE422E570FD0008E720 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C389BE222E570FD0008E720 /* LaunchScreen.storyboard */; };
 		4C389BEF22E570FD0008E720 /* BGSwapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C389BEE22E570FD0008E720 /* BGSwapperTests.swift */; };
 		4C389BFB22E571750008E720 /* DeepLabV3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 4C389BFA22E571750008E720 /* DeepLabV3.mlmodel */; };
-		4C389BFD22E6E6A90008E720 /* pradImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C389BFC22E6E6A80008E720 /* pradImage.png */; };
 		4C6F15F322E6F818001F221A /* MLMultiArray+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6F15F222E6F818001F221A /* MLMultiArray+Image.swift */; };
 		4C6F15F522E6FA83001F221A /* CGImage+RawBytes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6F15F422E6FA83001F221A /* CGImage+RawBytes.swift */; };
 		4C6F15F722E6FB4F001F221A /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6F15F622E6FB4F001F221A /* Math.swift */; };
@@ -50,7 +49,6 @@
 		4C389BEE22E570FD0008E720 /* BGSwapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGSwapperTests.swift; sourceTree = "<group>"; };
 		4C389BF022E570FD0008E720 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C389BFA22E571750008E720 /* DeepLabV3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = DeepLabV3.mlmodel; sourceTree = "<group>"; };
-		4C389BFC22E6E6A80008E720 /* pradImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pradImage.png; sourceTree = "<group>"; };
 		4C6F15F222E6F818001F221A /* MLMultiArray+Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MLMultiArray+Image.swift"; sourceTree = "<group>"; };
 		4C6F15F422E6FA83001F221A /* CGImage+RawBytes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGImage+RawBytes.swift"; sourceTree = "<group>"; };
 		4C6F15F622E6FB4F001F221A /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
@@ -134,7 +132,6 @@
 			isa = PBXGroup;
 			children = (
 				4C389BDD22E570FD0008E720 /* Assets.xcassets */,
-				4C389BFC22E6E6A80008E720 /* pradImage.png */,
 				4C389BFA22E571750008E720 /* DeepLabV3.mlmodel */,
 			);
 			path = Resources;
@@ -262,7 +259,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C389BE422E570FD0008E720 /* LaunchScreen.storyboard in Resources */,
-				4C389BFD22E6E6A90008E720 /* pradImage.png in Resources */,
 				4C389BE122E570FD0008E720 /* Preview Assets.xcassets in Resources */,
 				4C389BDE22E570FD0008E720 /* Assets.xcassets in Resources */,
 			);
