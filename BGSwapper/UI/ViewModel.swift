@@ -10,23 +10,8 @@ import Foundation
 import SwiftUI
 import Combine
 
-final class ViewModel: BindableObject {
-  
-  let willChange = PassthroughSubject<Void, Never>()
-  
-  var overlayImage: UIImage? {
-    willSet {
-      willChange.send()
-    }
-  }
-  var mainImage: UIImage? {
-    willSet {
-      willChange.send()
-    }
-  }
-  var processedImage: UIImage? {
-    willSet {
-      willChange.send()
-    }
-  }
+class ViewModel: ObservableObject {
+  @Published var overlayImage: UIImage?
+  @Published var mainImage: UIImage?
+  @Published var processedImage: UIImage?
 }

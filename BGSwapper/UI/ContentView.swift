@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct ContentView: View {
-  @ObjectBinding var data: ViewModel
+  var data: ViewModel
   
   private var overlayImage: UIImage {
     self.data.overlayImage!
