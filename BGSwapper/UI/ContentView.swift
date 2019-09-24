@@ -10,6 +10,9 @@ import SwiftUI
 
 struct ContentView: View {
   var data: ViewModel
+  var imageProcessor: ImageProcessor
+  @State private var showImagePicker: Bool = false
+  @State private var image: UIImage? = nil
   
   private var overlayImage: UIImage {
     self.data.overlayImage!
@@ -17,6 +20,28 @@ struct ContentView: View {
   
   var body: some View {
     ScrollView{
+      //View 3: Button
+      Button(action: {
+        self.showImagePicker = true
+      }) {
+        Text("Upload Image")
+      }
+      .sheet(isPresented: $showImagePicker, onDismiss: {
+        //This is only called when the image picker is manually dismissed
+        self.showImagePicker = false
+      }, content: {
+        //View 4: Image Picker
+        ImagePicker(isShown: self.$showImagePicker, uiImage: self.$image, onDismiss: {
+          //Called when the image picker is programmatically dismissed
+          //for example when an image is chosen
+            self.showImagePicker = false
+            if(self.image != nil) {
+              self.imageProcessor.performProcessing(onImage: self.image!)
+              self.data.mainImage = self.image
+            }
+          })
+        })
+      
       Text("Original Image")
         .bold()
       ZStack {
@@ -58,7 +83,7 @@ struct ContentView: View {
 #if DEBUG
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
-    ContentView(data: ViewModel())
+    ContentView(data: ViewModel(), imageProcessor: ImageProcessor())
   }
 }
 #endif

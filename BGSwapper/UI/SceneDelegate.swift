@@ -25,12 +25,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, ImageProcessorDelegate 
     // Use a UIHostingController as window root view controller
     if let windowScene = scene as? UIWindowScene {
       let window = UIWindow(windowScene: windowScene)
-      window.rootViewController = UIHostingController(rootView: ContentView(data: viewModel).environmentObject(viewModel))
+      imageProcessor.delegate = self
+      window.rootViewController = UIHostingController(rootView: ContentView(data: viewModel, imageProcessor: imageProcessor))//.environmentObject(viewModel))
       self.window = window
       window.makeKeyAndVisible()
     }
-    viewModel.mainImage = image
-    processImage()
+//    viewModel.mainImage = image
   }
   
   
